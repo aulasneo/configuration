@@ -216,7 +216,7 @@
     - install:app-requirements
 
 - name: create nodeenv
-  shell: "{{ edxapp_venv_dir }}/bin/nodeenv {{ edxapp_nodeenv_dir }} --node={{ edxapp_node_version }} --with-npm --force"
+  shell: "{{ edxapp_venv_dir }}/bin/nodeenv {{ edxapp_nodeenv_dir }} --node={{ edxapp_node_version }} --clean-src --force"
   tags:
     - install
     - install:system-requirements
