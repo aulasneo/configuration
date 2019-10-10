@@ -308,24 +308,28 @@
     - install:configuration
 
 - name: copy ssl cert
-  copy:
+  file:
     src: "{{ NGINX_SSL_CERTIFICATE }}"
-    dest: "/etc/ssl/certs/"
+    dest: "/etc/ssl/certs/{{ NGINX_SSL_CERTIFICATE|basename }}"
     owner: root
     group: root
     mode: 0644
+    state: link
+    force: yes
   when: ssl_cert.stat.exists and NGINX_ENABLE_SSL and NGINX_SSL_CERTIFICATE != 'ssl-cert-snakeoil.pem'
   tags:
     - install
     - install:configuration
-
+ 
 - name: copy ssl key
-  copy:
+  file:
     src: "{{ NGINX_SSL_KEY }}"
-    dest: "/etc/ssl/private/"
+    dest: "/etc/ssl/private/{{ NGINX_SSL_KEY|basename }}"
     owner: root
     group: root
     mode: 0640
+    state: link
+    force: yes
   when: ssl_key.stat.exists and NGINX_ENABLE_SSL and NGINX_SSL_KEY != 'ssl-cert-snakeoil.key'
   no_log: True
   tags:
